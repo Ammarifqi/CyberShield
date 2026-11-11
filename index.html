@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="CyberShield is Ammar Rifqi's STEM technology project: an interactive cybersecurity awareness prototype."
+    />
+    <title>CyberShield | STEM Technology Project</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="CyberShield home">
+        <span class="brand-mark">🛡</span>
+        <span>Cyber<span class="brand-accent">Shield</span></span>
+      </a>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-page="scanner">
+          Scam Scanner
+        </button>
+        <button class="nav-link" data-page="password">Password Check</button>
+        <button class="nav-link" data-page="twofa">2FA Simulator</button>
+        <button class="nav-link" data-page="device">Device Demo</button>
+        <button class="nav-link" data-page="quiz">Safety Quiz</button>
+      </nav>
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Open navigation"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="live-dot"></span> STEM TECHNOLOGY PROTOTYPE
+          </div>
+          <h1>
+            Think before<br /><span class="gradient-text">you click.</span>
+          </h1>
+          <p>
+            CyberShield turns cybersecurity ideas into hands-on learning. Spot
+            scam signals, check password habits and see how two-factor
+            authentication works, or explore a fictional device-security
+            scenario.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-btn" data-go="scanner">
+              Explore the tools <span>→</span>
+            </button>
+            <button class="secondary-btn" id="heroSample">
+              Try a scam example
+            </button>
+          </div>
+          <div class="hero-note">
+            <span>✓</span> No sign-up needed <span>·</span> Runs in your browser
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="orbit orbit-one"></div>
+          <div class="orbit orbit-two"></div>
+          <div class="shield-graphic"><div class="shield-inner">✓</div></div>
+          <div class="float-card card-top">
+            <span class="status-dot green"></span> Interactive security tools
+          </div>
+          <div class="float-card card-bottom">
+            <span class="mini-lock">⌑</span> Built to learn by doing
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-row" aria-label="Prototype features">
+        <div><strong>01</strong><span>Scam signals</span></div>
+        <div><strong>02</strong><span>Password strength</span></div>
+        <div><strong>03</strong><span>2FA simulation</span></div>
+        <div><strong>04</strong><span>Device safety demo</span></div>
+        <div><strong>05</strong><span>Interactive quiz</span></div>
+      </section>
+
+      <section class="content-section" id="appSection">
+        <div class="section-heading">
+          <div class="eyebrow">LEARN BY INTERACTING</div>
+          <h2>Cyber safety, made practical</h2>
+          <p>Choose a tool, try a sample and learn by doing.</p>
+        </div>
+
+        <div class="mobile-tabs" id="mobileTabs">
+          <button class="tab active" data-page="scanner">Scanner</button>
+          <button class="tab" data-page="password">Password</button>
+          <button class="tab" data-page="twofa">2FA</button>
+          <button class="tab" data-page="device">Device</button>
+          <button class="tab" data-page="quiz">Quiz</button>
+        </div>
+
+        <section class="tool-panel page-panel active" id="page-scanner">
+          <div class="panel-intro">
+            <div class="tool-icon purple">⌕</div>
+            <div>
+              <h3>Scam message scanner</h3>
+              <p>Paste a message to check for common phishing warning signs.</p>
+            </div>
+          </div>
+          <label for="messageInput">Message to analyse</label>
+          <textarea
+            id="messageInput"
+            rows="6"
+            placeholder="Paste a suspicious SMS, email or direct message here..."
+          ></textarea>
+          <div class="input-meta">
+            <span>Analysis happens in this browser.</span
+            ><span id="charCount">0 characters</span>
+          </div>
+          <div class="sample-row">
+            <span class="muted-label">TRY A SAMPLE</span>
+            <button class="sample-btn" id="samplePhishing">
+              Suspicious message
+            </button>
+            <button class="sample-btn" id="sampleLegit">Normal message</button>
+          </div>
+          <button class="primary-btn scan-btn" id="scanButton">
+            Analyse message <span>→</span>
+          </button>
+          <div class="result-card hidden" id="scanResult" aria-live="polite">
+            <div class="result-top">
+              <div>
+                <span class="muted-label">ASSESSMENT</span>
+                <h4 id="riskLabel">Review needed</h4>
+              </div>
+              <div class="score-ring" id="scoreRing">
+                <span id="riskScore">0</span><small>/100</small>
+              </div>
+            </div>
+            <p id="resultSummary"></p>
+            <div class="meter"><div id="scoreMeter"></div></div>
+            <h5>Indicators found</h5>
+            <ul id="indicatorList" class="indicator-list"></ul>
+            <div class="advice-box">
+              <strong>What should you do?</strong>
+              <p id="nextStep"></p>
+            </div>
+            <p class="disclaimer">
+              This result is an educational estimate. It cannot confirm whether
+              a message is genuine or fraudulent.
+            </p>
+          </div>
+        </section>
+
+        <section class="tool-panel page-panel" id="page-password">
+          <div class="panel-intro">
+            <div class="tool-icon blue">⌑</div>
+            <div>
+              <h3>Password security checker</h3>
+              <p>Check a few simple password habits.</p>
+            </div>
+          </div>
+          <label for="passwordInput">Enter a sample password</label>
+          <div class="password-field">
+            <input
+              id="passwordInput"
+              type="password"
+              placeholder="Type a sample password"
+            /><button id="togglePassword" class="show-btn" type="button">
+              Show
+            </button>
+          </div>
+          <p class="small-note">
+            For this demonstration, do not enter a password you use for a real
+            account.
+          </p>
+          <div class="strength-line"><div id="passwordMeter"></div></div>
+          <div class="strength-label">
+            <strong id="strengthText">Waiting for input</strong
+            ><span id="strengthScore">0 / 5 checks</span>
+          </div>
+          <p class="small-note" id="passwordAdvice" aria-live="polite">
+            Enter a sample password to see suggestions.
+          </p>
+          <div class="check-grid" id="passwordChecks">
+            <div data-check="length"><span>○</span> At least 8 characters</div>
+            <div data-check="lower"><span>○</span> Lowercase letter</div>
+            <div data-check="upper"><span>○</span> Uppercase letter</div>
+            <div data-check="number"><span>○</span> Number</div>
+            <div data-check="symbol"><span>○</span> Symbol</div>
+          </div>
+          <div class="advice-box">
+            <strong>Tip</strong>
+            <p>
+              Use a password you can remember, and avoid reusing it for other
+              accounts.
+            </p>
+          </div>
+        </section>
+
+        <section class="tool-panel page-panel" id="page-twofa">
+          <div class="panel-intro">
+            <div class="tool-icon green">⌘</div>
+            <div>
+              <h3>Two-factor authentication simulator</h3>
+              <p>
+                See how a second verification step adds protection to a sign-in.
+              </p>
+            </div>
+          </div>
+          <div class="steps">
+            <div class="step active" id="stepOne">
+              <span>1</span>
+              <div>
+                <strong>Sign-in details</strong
+                ><small>Enter a demo username</small>
+              </div>
+            </div>
+            <div class="step" id="stepTwo">
+              <span>2</span>
+              <div>
+                <strong>Verification code</strong
+                ><small>Complete the second step</small>
+              </div>
+            </div>
+            <div class="step" id="stepThree">
+              <span>3</span>
+              <div>
+                <strong>Access result</strong><small>See the outcome</small>
+              </div>
+            </div>
+          </div>
+          <div class="sim-box" id="loginStep">
+            <label for="demoUser">Demo username</label
+            ><input id="demoUser" type="text" placeholder="e.g. student01" />
+            <button class="primary-btn" id="sendCode">
+              Continue to verification <span>→</span>
+            </button>
+          </div>
+          <div class="sim-box hidden" id="otpStep">
+            <div class="otp-heading">
+              <div class="otp-icon">✉</div>
+              <div>
+                <strong>Your demo verification code</strong>
+                <p>For this simulation only, use the code below.</p>
+              </div>
+            </div>
+            <div class="demo-code" id="demoCode">482 916</div>
+            <label for="otpInput">Enter the 6-digit code</label
+            ><input
+              id="otpInput"
+              inputmode="numeric"
+              maxlength="6"
+              placeholder="000000"
+            />
+            <button class="primary-btn" id="verifyCode">
+              Verify code <span>→</span>
+            </button>
+            <button class="text-btn" id="backToLogin">Back</button>
+          </div>
+          <div class="sim-box hidden" id="otpResult" aria-live="polite"></div>
+          <p class="disclaimer">
+            This is a front-end learning simulation. It does not create an
+            account or send a real verification code.
+          </p>
+        </section>
+
+        <section class="tool-panel page-panel" id="page-device">
+          <div class="panel-intro">
+            <div class="tool-icon orange">!</div>
+            <div>
+              <h3>What if a device were compromised?</h3>
+              <p>Explore a fictional incident and a few safe first steps.</p>
+            </div>
+          </div>
+          <div class="simulation-notice" role="note">
+            <strong>Prototype only</strong>
+            <p>
+              This demo does not scan, access, change or send anything from your
+              device.
+            </p>
+          </div>
+          <div id="deviceDemoIntro" class="device-demo-intro">
+            <span class="muted-label">A FICTIONAL SCENARIO</span>
+            <h4>What would an access warning look like?</h4>
+            <p>
+              Follow a short, fictional scenario and choose how to respond.
+              This prototype will not check your device.
+            </p>
+            <button class="primary-btn" id="startDeviceDemo">
+              Start the simulation <span>→</span>
+            </button>
+          </div>
+          <div id="deviceDemoResult" class="hidden">
+            <div class="device-flow-progress" aria-label="Simulation progress">
+              <div class="device-flow-step active" data-device-step aria-current="step">
+                <span>1</span>
+                <strong>Alert</strong>
+              </div>
+              <div class="device-flow-step" data-device-step>
+                <span>2</span>
+                <strong>Activity</strong>
+              </div>
+              <div class="device-flow-step" data-device-step>
+                <span>3</span>
+                <strong>Response</strong>
+              </div>
+            </div>
+            <section
+              class="device-flow-stage"
+              id="deviceStageAlert"
+              aria-labelledby="deviceAlertTitle"
+              tabindex="-1"
+            >
+              <div class="device-notification" role="status" aria-live="polite">
+                <span class="device-notification-icon" aria-hidden="true">!</span>
+                <div class="device-notification-copy">
+                  <small>CYBERSHIELD SIMULATION · NOT A REAL ALERT</small>
+                  <strong id="deviceAlertTitle">A simulated hacker accessed this device</strong>
+                  <p>This is fictional. No one has accessed your device.</p>
+                </div>
+              </div>
+              <div class="device-decision">
+                <h4>What would you do first?</h4>
+                <p>Choose the safest next step for this fictional situation.</p>
+                <div class="device-choices">
+                  <button class="device-choice" data-device-choice="trusted">
+                    Verify using a different trusted device
+                  </button>
+                  <button class="device-choice" data-device-choice="ignore">
+                    Dismiss the alert and carry on
+                  </button>
+                </div>
+                <p
+                  id="deviceChoiceFeedback"
+                  class="device-flow-feedback hidden"
+                  role="status"
+                  aria-live="polite"
+                ></p>
+              </div>
+              <div class="device-flow-actions">
+                <button class="primary-btn hidden" id="continueToActivity">
+                  Next: activity <span>→</span>
+                </button>
+              </div>
+            </section>
+            <section
+              class="device-flow-stage hidden"
+              id="deviceStageActivity"
+              aria-labelledby="deviceActivityTitle"
+              tabindex="-1"
+            >
+              <div class="device-monitor">
+                <div class="device-monitor-header">
+                  <div class="device-monitor-icon" aria-hidden="true">⌁</div>
+                  <div>
+                    <strong id="deviceActivityTitle">Simulated device activity</strong>
+                    <small>Fictional demo device · no data collected</small>
+                  </div>
+                  <span class="device-monitor-badge">
+                    LOCAL <time id="deviceLocalTime">--:--</time>
+                  </span>
+                </div>
+                <div class="device-event-list">
+                  <div class="device-event">
+                    <time data-device-time>--:--</time>
+                    <div class="device-event-copy">
+                      <strong>Unfamiliar app requests access</strong>
+                      <small>A fictional app asks to view account information.</small>
+                    </div>
+                    <span class="device-event-tag">SIMULATED</span>
+                  </div>
+                  <div class="device-event">
+                    <time data-device-time>--:--</time>
+                    <div class="device-event-copy">
+                      <strong>Unrecognized sign-in</strong>
+                      <small>A service reports a sign-in the user does not recognize.</small>
+                    </div>
+                    <span class="device-event-tag">SIMULATED</span>
+                  </div>
+                  <div class="device-event">
+                    <time data-device-time>--:--</time>
+                    <div class="device-event-copy">
+                      <strong>Unexpected message sent</strong>
+                      <small>A message appears in the account's activity history.</small>
+                    </div>
+                    <span class="device-event-tag">SIMULATED</span>
+                  </div>
+                </div>
+              </div>
+              <p class="disclaimer">
+                These signs can have other explanations. They do not prove a
+                device was hacked.
+              </p>
+              <div class="device-flow-actions">
+                <button class="secondary-btn" id="backToAlert">← Back</button>
+                <button class="primary-btn" id="continueToResponse">
+                  See what to do <span>→</span>
+                </button>
+              </div>
+            </section>
+            <section
+              class="device-flow-stage hidden"
+              id="deviceStageResponse"
+              aria-labelledby="deviceResponseTitle"
+              tabindex="-1"
+            >
+              <h4 class="response-heading" id="deviceResponseTitle">
+                If this happened for real
+              </h4>
+              <ol class="response-steps">
+                <li>
+                  If you suspect the device itself is actively compromised, stop
+                  using it for sensitive accounts and disconnect it from the
+                  network.
+                </li>
+                <li>
+                  From a different trusted device, change affected passwords,
+                  sign out unknown sessions and turn on multi-factor
+                  authentication.
+                </li>
+                <li>
+                  Contact the service or your organisation's IT support using
+                  official details. Contact your bank promptly if money may be
+                  involved.
+                </li>
+              </ol>
+              <p class="disclaimer">
+                These are general suggestions, not a diagnosis. The prototype
+                has not inspected your device.
+              </p>
+              <div class="device-takeaway">
+                <strong>Key takeaway</strong>
+                <span>Verify unusual activity through a trusted device and official channels.</span>
+              </div>
+              <div class="device-flow-actions">
+                <button class="secondary-btn" id="backToActivity">← Back</button>
+                <button class="secondary-btn" id="resetDeviceDemo">
+                  Start again
+                </button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <section class="tool-panel page-panel" id="page-quiz">
+          <div class="panel-intro">
+            <div class="tool-icon orange">?</div>
+            <div>
+              <h3>Cyber safety quiz</h3>
+              <p>Test your knowledge with five quick questions.</p>
+            </div>
+          </div>
+          <div class="quiz-progress">
+            <span id="quizProgressText">QUESTION 1 OF 5</span>
+            <div class="meter"><div id="quizProgress"></div></div>
+          </div>
+          <div id="quizContent"></div>
+          <div id="quizResult" class="hidden"></div>
+        </section>
+      </section>
+    </main>
+
+    <footer>
+      <a class="brand footer-brand" href="#"
+        ><span class="brand-mark">🛡</span
+        ><span>Cyber<span class="brand-accent">Shield</span></span></a
+      >
+      <p>Learn. Check. Stay safer online.</p>
+      <small class="creator-credit"
+        >A STEM technology project by ammar rifqi</small
+      >
+      <small
+        >Educational prototype. A low-risk result does not guarantee that a
+        message is safe.</small
+      >
+    </footer>
+    <script src="script.js"></script>
+  </body>
+</html>
